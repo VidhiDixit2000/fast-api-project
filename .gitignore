@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environments
+.venv/
+.venvgh/
+venv/
+
+# Environment Variables
+.env
+
+# React
+frontend/node_modules/
+frontend/build/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+
+# Logs
+*.log

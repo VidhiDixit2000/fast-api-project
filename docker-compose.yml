@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  postgres-db:
+    image: postgres:18
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Vidhi@1234
+      POSTGRES_DB: fastapi-db
+    ports:
+      - "5433:5432"
+
+  fastapi:
+    build: .
+    container_name: fastapi-container
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:Vidhi%401234@postgres-db:5432/fastapi-db
+    depends_on:
+      - postgres-db
