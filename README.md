@@ -1,16 +1,16 @@
 # KeepUp Inventory Management System
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#react--fastapi--postgresql-crud-application)
+A full-stack CRUD application built with **React**, **FastAPI**, and **PostgreSQL**, containerized with **Docker**, deployed on **AWS EC2** through a **GitHub Actions** CD pipeline, and hosted with the React frontend on **Netlify**.
 
-A full-stack CRUD application built with **React**, **FastAPI**, and **PostgreSQL**, containerized with **Docker**, deployed on **AWS EC2**, and hosted with the React frontend on **Netlify**.
+### 🌐 Live Demo
 
-This project was built primarily to understand and demonstrate practical **Docker, container networking, cloud deployment, environment variables, and frontend/backend deployment**.
+**Frontend:** https://keepupinventory.netlify.app/
+
+This project was built primarily to understand and demonstrate practical **Docker, container networking, cloud deployment, environment variables, and frontend/backend deployment**.
 
 ---
 
 ## 🚀 Project Overview
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-project-overview)
 
 The application provides a simple interface for managing product inventory:
 
@@ -22,19 +22,21 @@ The application provides a simple interface for managing product inventory:
 
 ### Tech Stack
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#tech-stack)
-
-Layer Technology
-
----
-
-Frontend React Backend Python + FastAPI Database PostgreSQL ORM SQLAlchemy Containerization Docker + Docker Compose Backend Hosting AWS EC2 Frontend Hosting Netlify Version Control Git + GitHub
+| Layer | Technology |
+|---|---|
+| Frontend | React |
+| Backend | Python + FastAPI |
+| Database | PostgreSQL |
+| ORM | SQLAlchemy |
+| Containerization | Docker + Docker Compose |
+| Backend Hosting | AWS EC2 |
+| Frontend Hosting | Netlify |
+| Version Control | Git + GitHub |
+| CI/CD | GitHub Actions (backend), Netlify auto-deploy (frontend) |
 
 ---
 
 ## 🏗️ Architecture
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#%EF%B8%8F-architecture)
 
 ```
                          Internet
@@ -49,14 +51,9 @@ Frontend React Backend Python + FastAPI Database PostgreSQL ORM SQLAlchemy Conta
                                       |
                                       v
                              PostgreSQL Container
-
 ```
 
-**svg**
-
 ### Request Flow
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#request-flow)
 
 ```
 User
@@ -70,20 +67,15 @@ FastAPI API (AWS EC2 :8000)
   |
   v
 PostgreSQL (Docker)
-
 ```
-
-**svg**
 
 The React application communicates with the FastAPI backend through the backend's API URL.
 
-Inside Docker Compose, FastAPI communicates with PostgreSQL using the PostgreSQL service name (`postgres-db`) rather than `localhost`.
+Inside Docker Compose, FastAPI communicates with PostgreSQL using the PostgreSQL service name (`postgres-db`) rather than `localhost`.
 
 ---
 
 ## 📁 Project Structure
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-project-structure)
 
 ```
 project-root/
@@ -106,16 +98,11 @@ project-root/
 │
 ├── docker-compose.yml
 └── README.md
-
 ```
-
-**svg**
 
 ---
 
 ## ⚙️ Backend
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#%EF%B8%8F-backend)
 
 The backend is implemented using FastAPI.
 
@@ -127,10 +114,7 @@ POST   /products
 GET    /products/{id}
 PUT    /products/{id}
 DELETE /products/{id}
-
 ```
-
-**svg**
 
 FastAPI provides the REST API, while SQLAlchemy is used to interact with PostgreSQL.
 
@@ -138,39 +122,29 @@ FastAPI provides the REST API, while SQLAlchemy is used to interact with Postgre
 
 ## 🗄️ Database
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#%EF%B8%8F-database)
-
 The project uses PostgreSQL.
 
-When running locally without Docker, the database can be accessed through `localhost`.
+When running locally without Docker, the database can be accessed through `localhost`.
 
 When FastAPI and PostgreSQL are running in Docker Compose, the backend connects to PostgreSQL through the Docker Compose service name:
 
 ```
 postgres-db
-
 ```
-
-**svg**
 
 Example Docker database URL:
 
 ```
 postgresql://postgres:<PASSWORD>@postgres-db:5432/postgres
-
 ```
-
-**svg**
 
 The application reads the database connection string from an environment variable:
 
-```
+```python
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 ```
-
-**svg**
 
 This keeps database configuration outside the application code.
 
@@ -178,97 +152,53 @@ This keeps database configuration outside the application code.
 
 ## 🐳 Docker
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-docker)
-
 The backend and PostgreSQL database are containerized.
 
 ### Build and start the application
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#build-and-start-the-application)
-
-```
+```bash
 docker compose up --build
 ```
 
-**svg**
-
 ### Start existing images
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#start-existing-images)
-
-```
+```bash
 docker compose up -d
 ```
 
-**svg**
-
 ### Check running containers
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#check-running-containers)
-
-```
+```bash
 docker ps
 ```
 
-**svg**
-
 ### Stop the containers
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#stop-the-containers)
-
-```
+```bash
 docker compose down
 ```
 
-**svg**
-
 ### View logs
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#view-logs)
-
-```
+```bash
 docker compose logs
 ```
 
-**svg**
-
 For the FastAPI service:
 
-```
+```bash
 docker compose logs fastapi
 ```
-
-**svg**
 
 ---
 
 ## 🔌 Docker Networking
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-docker-networking)
+One important Docker concept used in this project is **service-to-service communication**.
 
-One important Docker concept used in this project is **service-to-service communication**.
+The FastAPI container does **not** use `localhost` to reach PostgreSQL.
 
-The FastAPI container does **not** use:
-
-```
-localhost
-
-```
-
-**svg**
-
-to reach PostgreSQL.
-
-Instead, Docker Compose provides internal DNS, so the PostgreSQL service can be reached using:
-
-```
-postgres-db
-
-```
-
-**svg**
-
-Therefore:
+Instead, Docker Compose provides internal DNS, so the PostgreSQL service can be reached using `postgres-db`:
 
 ```
 FastAPI Container
@@ -276,97 +206,55 @@ FastAPI Container
        | DATABASE_URL
        v
 postgres-db:5432
-
 ```
 
-**svg**
-
-This is different from accessing PostgreSQL from the host machine, where `localhost:5432` may be used.
+This is different from accessing PostgreSQL from the host machine, where `localhost:5432` may be used.
 
 ---
 
 ## 💻 Running Locally
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-running-locally)
-
 ### 1. Start PostgreSQL and FastAPI
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#1-start-postgresql-and-fastapi)
 
 From the project root:
 
-```
+```bash
 docker compose up --build
 ```
 
-**svg**
+The FastAPI API is available at: `http://localhost:8000`
 
-The FastAPI API is available at:
-
-```
-http://localhost:8000
-
-```
-
-**svg**
-
-FastAPI's interactive API documentation is available at:
-
-```
-http://localhost:8000/docs
-
-```
-
-**svg**
+FastAPI's interactive API documentation is available at: `http://localhost:8000/docs`
 
 ### 2. Start the React frontend
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#2-start-the-react-frontend)
-
 Navigate to the frontend:
 
-```
+```bash
 cd frontend
 ```
 
-**svg**
-
 Install dependencies:
 
-```
+```bash
 npm install
 ```
 
-**svg**
-
 Start the development server:
 
-```
+```bash
 npm start
 ```
 
-**svg**
-
-If port `3000` is already occupied, React can run on another port such as:
-
-```
-http://localhost:3001
-
-```
-
-**svg**
+If port `3000` is already occupied, React can run on another port such as `http://localhost:3001`.
 
 ---
 
 ## 🌐 Frontend Environment Variables
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-frontend-environment-variables)
-
 The frontend uses an environment variable to determine where the backend API is hosted.
 
 ### Development
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#development)
 
 `.env.development`
 
@@ -374,11 +262,7 @@ The frontend uses an environment variable to determine where the backend API is 
 REACT_APP_API_URL=http://127.0.0.1:8000
 ```
 
-**svg**
-
 ### Production
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#production)
 
 `.env.production`
 
@@ -386,15 +270,11 @@ REACT_APP_API_URL=http://127.0.0.1:8000
 REACT_APP_API_URL=http://<EC2_PUBLIC_IP>:8000
 ```
 
-**svg**
-
 The React application accesses it using:
 
-```
+```javascript
 process.env.REACT_APP_API_URL
 ```
-
-**svg**
 
 This allows the same frontend codebase to communicate with different backend environments.
 
@@ -402,9 +282,7 @@ This allows the same frontend codebase to communicate with different backend env
 
 ## ☁️ AWS EC2 Deployment
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#%EF%B8%8F-aws-ec2-deployment)
-
-The FastAPI backend was deployed to an **AWS EC2** instance.
+The FastAPI backend was deployed to an **AWS EC2** instance.
 
 The deployment flow was:
 
@@ -423,69 +301,46 @@ Docker
      +------ FastAPI Container
      |
      +------ PostgreSQL Container
-
 ```
 
-**svg**
-
 ### EC2 Setup
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#ec2-setup)
 
 The EC2 server runs Docker and Docker Compose.
 
 After connecting to the server:
 
-```
+```bash
 docker ps
 ```
 
-**svg**
-
-The FastAPI application is exposed on port:
-
-```
-8000
-
-```
-
-**svg**
+The FastAPI application is exposed on port `8000`.
 
 The API can then be accessed through the EC2 public IP:
 
 ```
 http://<EC2_PUBLIC_IP>:8000
-
 ```
-
-**svg**
 
 FastAPI documentation:
 
 ```
 http://<EC2_PUBLIC_IP>:8000/docs
-
 ```
 
-**svg**
-
-> Replace `<EC2_PUBLIC_IP>` with the current public IP of your EC2 instance. Avoid committing a changing EC2 IP directly into source code.
+> Replace `<EC2_PUBLIC_IP>` with the current public IP of your EC2 instance. Avoid committing a changing EC2 IP directly into source code.
 
 ---
 
 ## 🔐 AWS Security Group
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-aws-security-group)
-
 The EC2 security group needs to allow the required inbound traffic.
 
 Typical development configuration:
 
-Protocol Port Purpose
-
----
-
-SSH 22 Server administration TCP 8000 FastAPI API
+| Protocol | Port | Purpose |
+|---|---|---|
+| SSH | 22 | Server administration |
+| TCP | 8000 | FastAPI API |
 
 For a production deployment, access rules should be restricted appropriately rather than exposing development ports publicly.
 
@@ -493,29 +348,22 @@ For a production deployment, access rules should be restricted appropriately rat
 
 ## 🌍 Netlify Frontend Deployment
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-netlify-frontend-deployment)
-
-The React frontend was deployed using **Netlify**.
+The React frontend was deployed using **Netlify**.
 
 Netlify configuration:
 
-```
-Branch: main
-Base directory: frontend
-Build command: npm run build
-Publish directory: build
-
-```
-
-**svg**
+| Setting | Value |
+|---|---|
+| Branch | `main` |
+| Base directory | `frontend` |
+| Build command | `npm run build` |
+| Publish directory | `build` |
 
 The production frontend uses the EC2 backend URL through:
 
 ```
 REACT_APP_API_URL=http://<EC2_PUBLIC_IP>:8000
 ```
-
-**svg**
 
 After the frontend is deployed, the user accesses the React application through the production Netlify URL:
 
@@ -524,8 +372,6 @@ After the frontend is deployed, the user accesses the React application through 
 ---
 
 ## 🔄 Complete Deployment Flow
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-complete-deployment-flow)
 
 ```
                  GitHub Repository
@@ -541,10 +387,7 @@ After the frontend is deployed, the user accesses the React application through 
               |                     +--> PostgreSQL
               |                     |
               +-------- HTTP -------+
-
 ```
-
-**svg**
 
 The deployed architecture separates the frontend and backend:
 
@@ -576,86 +419,67 @@ FastAPI Response
    |
    v
 React UI
-
 ```
 
-**svg**
+---
+
+## 🔁 CI/CD Pipeline
+
+Deployments are automated, so no manual steps on the server are needed after a push.
+
+| Part | Tool | Trigger |
+|---|---|---|
+| Backend | GitHub Actions workflow: **Deploy to EC2** | Push to `main` |
+| Frontend | Netlify continuous deployment | Push to `main` |
+
+```
+Developer pushes to main
+          |
+          +----------------------------+
+          |                            |
+          v                            v
+  GitHub Actions                   Netlify
+  "Deploy to EC2"              builds React app
+          |                            |
+          v                            v
+  AWS EC2 (Docker Compose)      Live frontend updated
+  FastAPI + PostgreSQL
+```
+
+The workflow is defined in `.github/workflows/`, and run history is visible in the repository's **Actions** tab.
 
 ---
 
 ## 🧪 Testing the Backend
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-testing-the-backend)
-
 You can verify that FastAPI is running with:
 
-```
+```bash
 curl http://localhost:8000/products
 ```
 
-**svg**
-
-You can also open:
-
-```
-/docs
-
-```
-
-**svg**
-
-to use FastAPI's Swagger UI and test the API interactively.
+You can also open `/docs` to use FastAPI's Swagger UI and test the API interactively.
 
 ---
 
 ## 🛠️ Troubleshooting
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#%EF%B8%8F-troubleshooting)
-
 ### CORS Error
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#cors-error)
 
 If the React frontend is running on a different origin, FastAPI needs to allow the frontend origin.
 
 For example:
 
 ```
-Frontend:
-http://localhost:3001
-
-Backend:
-http://localhost:8000
-
+Frontend: http://localhost:3001
+Backend:  http://localhost:8000
 ```
-
-**svg**
 
 These are different origins, so CORS must be configured appropriately in FastAPI.
 
----
-
 ### PostgreSQL Connection Error
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#postgresql-connection-error)
-
-Inside Docker, make sure the database hostname is:
-
-```
-postgres-db
-
-```
-
-**svg**
-
-and not:
-
-```
-localhost
-
-```
-
-**svg**
+Inside Docker, make sure the database hostname is `postgres-db` and not `localhost`.
 
 For example:
 
@@ -663,29 +487,19 @@ For example:
 DATABASE_URL=postgresql://postgres:<PASSWORD>@postgres-db:5432/postgres
 ```
 
-**svg**
-
----
-
 ### Port Already in Use
 
-[svg](https://github.com/VidhiDixit2000/fast-api-project#port-already-in-use)
+If port `3000` is already occupied, React may ask to use another port such as `3001`.
 
-If port `3000` is already occupied, React may ask to use another port such as `3001`.
+For FastAPI, check whether port `8000` is already being used:
 
-For FastAPI, check whether port `8000` is already being used:
-
-```
+```bash
 docker ps
 ```
-
-**svg**
 
 ---
 
 ## 📌 Key Concepts Demonstrated
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-key-concepts-demonstrated)
 
 This project demonstrates practical experience with:
 
@@ -704,13 +518,12 @@ This project demonstrates practical experience with:
 - Linux server basics
 - Netlify frontend deployment
 - Git/GitHub-based workflow
+- CI/CD with GitHub Actions
 - Debugging deployed applications
 
 ---
 
 ## 🎯 Learning Objective
-
-[svg](https://github.com/VidhiDixit2000/fast-api-project#-learning-objective)
 
 The main goal of this project was not to build a complex business application, but to understand how a modern application moves from local development to a cloud-hosted environment.
 
@@ -729,10 +542,9 @@ AWS EC2
         ↓
 Netlify
         ↓
+CI/CD with GitHub Actions
+        ↓
 Deployed Full-Stack Application
-
 ```
 
-**svg**
-
-This provides a foundation for adding more advanced DevOps practices later, such as CI/CD with GitHub Actions, container registries, infrastructure as code, monitoring, and Kubernetes.
+This provides a foundation for adding more advanced DevOps practices later, such as automated tests in the pipeline, container registries, infrastructure as code, monitoring, and Kubernetes.
